@@ -1,0 +1,147 @@
+// First Practical on Simple SPI 
+
+▪️Create a folder in File Explorer. 
+// sem9th_44_31
+
+▪️Open Arduino App :
+
+Write (long main) code 
+
+----------
+👩🏻‍💻 Code : 
+
+#include<SPI.h>
+
+char buf[100];
+byte c=0, b=0;
+volatile byte pos;
+volatile boolean processing;
+byte i;
+
+void setup(void) 
+{
+  // put your setup code here, to run once:
+Serial.begin (115200);
+pinMode(MISO,OUTPUT);
+pinMode(MOSI,INPUT);
+SPCR |= _BV(SPE);
+pos=0;
+processing = false;
+SPI.attachInterrupt();
+}
+
+ISR(SPI_STC_vect)
+{
+  c=SPDR;
+  /*SPDR=0x55;
+   b++;
+   if(pos<100)
+   {
+   buf[pos++]=c;
+   //if(c=='\n')
+   processing=true;
+   }*/processing=true;
+}
+
+void loop(void) 
+{
+  // put your main code here, to run repeatedly:
+if(processing)
+{
+  //buf[pos]=0;
+  Serial.println(c);
+  //pos=0;
+  processing=false;
+  SPDR=i;
+  i=i+1;
+}
+}
+
+----------
+Save this code in our folder.
+
+Upload / Run this code Via "->" arrow   it'll return success in terminal.
+
+▪️Connect raspberry pi : 
+
+// Do this work with off switch then 
+
+Connect the Raspberry pi plug to  Raspberry pi model Kit ( Looks like a Charging cable )
+
+Connect the 2nd PC Ethernet to Raspberry pi Kit
+
+
+▪️Open VNC Viewer
+
+Write the given port number from the lab faculty. 
+
+Ex. 10.25.3.136 then Enter. 
+
+Give Username and password which has been given to you. 
+
+Username - pi
+Password - admin
+
+▪️Code box Raspberry Pi will open :
+
+Create folder
+// cd sem9th_44_31
+
+Create file
+// nano name.py
+
+Write code // Short one
+
+----------
+👩🏻‍💻 Code : 
+
+import spidev
+import time
+
+spi = spidev.SpiDev(0,0)
+spi.open(0,0)
+msg = 0xAA
+spi.max_speed_hz = 115200
+
+while 1:
+   spi.writebytes([0x4,0x06])
+   # resp = spi.xfer2(0xAA)
+   y = spi.readbytes(0xAA)
+   print(y)
+   time.sleep(0.5)
+
+----------
+
+To Save this -> ctrl + s
+To Exit from the Program ->  ctrl + x
+To Run File  ->  python3 filename
+
+
+▪️Upload arduino code  from arduino app to Arduino kit - connection with raspberry Pi  with jumper wire
+
+Arduino pin no is for..
+11 connection ->  mosi
+12 - miso
+13 - clock
+
+Raspberry pi..
+19 pin for - mosi
+21 - miso
+23 - clock
+
+Jumper connection wire
+11 - 19
+12 - 21
+13 - 23
+
+▪️For run 
+In Raspberry pi Terminal 
+Python3 filename.py ,
+
+▪️In Arduino Tools - goto Port - Select com6 or 4 
+For checking.
+
+Select Serial begin number as per your code  // ex. 115200  &  Send.
+
+
+
