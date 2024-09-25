@@ -1,8 +1,8 @@
 // Include the wire library for I2C
 
-#include (Wire.h>
-   int i2cData=0x56;
-     const int ledPin = 13;
+#include <Wire.h>
+ int i2cData=0x56;
+   const int ledPin = 13;
    int c;
 
 void setup(){
@@ -21,12 +21,12 @@ digitalWrite(ledPin,LOW);
 // Function that executes whenever data is received from master
 void receiveEvent(int howMany) {
 while (Wire.available()){ // loop through all but the last
-c = Wire.read(); // receive byte as a character
-digitalWrite(ledpin, c);
+  c = Wire.read(); // receive byte as a character
+  digitalWrite(ledPin, c);
 }
 
 void loop(){
-delay(100);
+  delay(100);
 if(c<0x02)
 {
 Serial.println(c);
