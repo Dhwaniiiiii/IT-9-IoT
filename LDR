@@ -7,15 +7,22 @@ Serial.begin(9600);
 void loop()
 {
 ldr = analogRead(A0);  //Reads the Value-of LDR(light).
-1f(ldr<50)
+if(ldr<50)
 {
-digitalWrite(13, HIGH);
+   digitalWrite(13, HIGH);
 }
 else
 {
-digitalwrite(13, LOW);
+   digitalwrite(13, LOW);
 }
 Serial.println(ldr);  //prints the value of LDR to Serial Monitor.
 delay(100);
 }
 //Serial.println(value);
+
+_________
+For Running the Code in Arduino ...
+1) Verify ✅
+2) Upload ➡️
+3) In tools. Port  Select " COM3" 
+4) In rhs Serial Monitor
