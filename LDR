@@ -1,0 +1,21 @@
+int ldr;  //Set A0(Analog Input) for LDR.
+//int value=0;
+void setup()
+pinMode(13,OUTPUT);
+Serial.begin(9600);
+//pinMode(3,OUTPUT);
+void loop()
+{
+ldr = analogRead(A0);  //Reads the Value-of LDR(light).
+1f(ldr<50)
+{
+digitalWrite(13, HIGH);
+}
+else
+{
+digitalwrite(13, LOW);
+}
+Serial.println(ldr);  //prints the value of LDR to Serial Monitor.
+delay(100);
+}
+//Serial.println(value);
