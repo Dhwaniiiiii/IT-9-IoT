@@ -1,0 +1,25 @@
+// Ultrasonic Sensor Connections with Raspberry Pi 
+
+
+▪️ Device Needs : 
+
+1) Raspberry Pi
+2) Ultrasonic sensor (HC-SR04)
+3) Jumper Wires (4) 
+
+
+▪️ Connect the Peripherals : (raspberry pi)
+
+1) Attach a keyboard and mouse to the Raspberry Pi USB 2.
+2) Attach a monitor to the Raspberry Pi HDMI Port.
+3) Connect a Raspberry Pi Power Supply pin to the Raspberry Pi USB -C.
+
+
+▪️ Jumper Wire Connection Between :
+
+Ultrasonic - Raspberry Pi
+1) VCC - pin 4 (5v)
+2) Echo - pin 38 (GPIO 20)
+3) Trig - pin 40 (GPIO 21)
+4) GND - pin 6 (ground) 
+
