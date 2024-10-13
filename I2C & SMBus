@@ -1,0 +1,41 @@
+# I2C Code.. For Arduino 
+
+// Include the wire library for I2C
+
+#include <Wire.h>
+ int i2cData=0x56;
+   const int ledPin = 13;
+   int c;
+
+void setup(){
+// Join I2C bus as slave with address 8
+Wire.begin(0x8);
+Serial.begin (9600);
+// Call receiveEvent when data received
+Wire.onReceive(receiveEvent);
+// call get request from master
+Wire.onRequest(sendData);
+// Setup pin 13 as output and turn LED off
+pinMode(ledPin, OUTPUT);
+digitalWrite(ledPin,LOW);
+}
+
+// Function that executes whenever data is received from master
+void receiveEvent(int howMany) {
+while (Wire.available()){ // loop through all but the last
+  c = Wire.read(); // receive byte as a character
+  digitalWrite(ledPin, c);
+}
+
+void loop(){
+  delay(100);
+if(c<0x02)
+{
+Serial.println(c);
+c=0x02;
+}
+}
+
+void sendData(){
+Wire.write(i2cData);
+}
