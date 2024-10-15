@@ -1,0 +1,51 @@
+#💥 PIR (motion) sensor 
+
+# Used for A detecting live object on object detection : Pin-High  
+# (Body & live humun being)
+
+# 💥 CONNECTION 
+
+Device Needs : 
+1) Raspberry pi kit
+2) LDR Sensor Module
+3) Jumper Wires
+4) LED light
+
+
+LDR Sensor ->  Raspberry pi Connection :
+
++ve  : vcc    ->  Pin 2  : v5/vcc
+data : input  ->  Pin 12 : GPIO 18
+-ve  : ground ->  Pin 6  : ground 
+
+
+LED Pin -> Raspberry pi Connection  :
+
+-ve ->  ground 
++ve ->  Pin 18 (GPIO 24)
+
+LED small leg - negative -: connect to ground 
+LED long leg - positive -:  output pin
+
+
+
+# 💥 RASPBERRY PI  CODE
+
+import RPi.GPIO as GPIO
+import time
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(24,GPIO.OUT) # pin 18
+GPIO.setup(18,GPIO.IN) # pin 12
+# here 18 & 24 are just pin name, not directly pin no.
+
+while(True):
+   myin=GPIO.input(18)
+   if myin==True:
+   print("Motion Detected")
+   time.sleep(1)
+   GPIO.output(24,True)
+   time.sleep(0.5)
+   GPIO.output(24,False)
+   time.sleep(0.5)
+
+# mkdir folder_name (create folder), cd folder_name (to go in our folder), nano file_name.py -> code (create file and write code), ctrl+s(save), ctrl+x(exit), python3 file_name.py (run)
