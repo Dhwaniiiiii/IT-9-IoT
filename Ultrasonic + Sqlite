@@ -1,0 +1,68 @@
+Assignment : Que 1: The distance is found in the ultrasonic sensor and if it goes above 50 cm then 
+the data has to be recorded in the "Sqlite" along with the real time and distance.
+
+// Library import for sqlite & ultrasonic 
+
+import RPi.GPIO as GPIO
+import paho.mqtt.client as mqtt
+import time
+import sqlite3
+
+// Database connection code
+
+conn=sqlite3.connect("IT9_38_59.db")
+crsr=conn.cursor()
+
+table="CREATE TABLE IF NOT EXISTS Distance Log(SID INTEGER PRIMARY KEY AUTOINCREMENT, DISTANCE REAL, TIMESTAMP TEXT);"
+crsr.execute(table)
+print("Table created.")
+
+broker url="broker.emqx.io"
+broker_port=1883
+
+client=mqtt.Client()
+client.connect(broker_url, broker_port)
+
+// Ultrasonic Code.. 
+
+TRIG=21
+ECHO=20
+GPIO.setmode(GPIO.BCM)
+
+while True:
+print("Distance meausurement in progress")
+GPIO.setup(TRIG, GPIO.OUT)
+GPIO.setup(ECHO,GPIO.IN)
+GP10.output(TRIG, False)
+print("Waiting for sensor to settle")
+time.sleep(0.2)
+GPIO.output(TRIG, True)
+time.sleep(0.00001)
+GPIO.output(TRIG, False) 
+
+while GPIO.input(ECHO)==0:
+pulse start=time.time()
+
+while GPIO.input(ECHO)==1:
+pulse_end time.time() 
+
+pulse_duration=pulse_end-pulse_start
+distance = pulse_duration*17150
+distance round(distance, 2)
+
+// Condition of records and store in sqlite 
+
+if distance>50:
+cur_time-tine.strftime('%Y-%m-%d %H:%M:%S')
+crsr.execute("INSERT INTO Distance_Log(DISTANCE, TIMESTAMP) VALUES(?,?)", (distance,cur_time))
+conn.commit()
+print("Data Inserted", pulse_duration, distance)
+data=distance
+client.publish(topic="wizard", payload=data, qos=0, retain=False)
+
+// Ultrasonic code
+print("Distance:", distance, "cm")
+time.sleep(2)
+
+
+(Note: Sensor & Device Connection same as Ultrasonic) 
